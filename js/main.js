@@ -120,6 +120,63 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* 読み込み時にも一度判定 */
 
-  updateHeader();
+    updateHeader();
+
+
+  /* ========================
+     RESULTS LOADING
+  ======================== */
+
+  const resultsLink = document.querySelector("#resultsLink");
+  const resultsLoading = document.querySelector("#resultsLoading");
+
+  if (resultsLink && resultsLoading) {
+
+    resultsLink.addEventListener("click", async (event) => {
+
+      event.preventDefault();
+
+      const resultsUrl =
+        "https://ueckendo-app.onrender.com/results";
+
+      /* ローディング画面を表示 */
+      resultsLoading.classList.add("active");
+      resultsLoading.setAttribute("aria-hidden", "false");
+
+      /* 背景スクロールを停止 */
+      document.body.style.overflow = "hidden";
+
+
+      const checkServer = async () => {
+
+        try {
+
+          await fetch(resultsUrl, {
+            mode: "no-cors",
+            cache: "no-store"
+          });
+
+          /*
+            fetchが完了した時点でRenderが応答したと判断して
+            試合結果ページへ移動
+          */
+          window.location.href = resultsUrl;
+
+        } catch (error) {
+
+          /*
+            起動していなければ少し待って再確認
+          */
+          setTimeout(checkServer, 1500);
+
+        }
+
+      };
+
+      checkServer();
+
+    });
+
+  }
 
 });
