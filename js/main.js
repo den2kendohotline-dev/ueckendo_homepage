@@ -361,5 +361,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   }
+  /* ========================
+     RESET RESULTS LOADING
+     ブラウザの「戻る」対策
+  ======================== */
 
+  window.addEventListener("pageshow", () => {
+
+    const loading = document.querySelector("#resultsLoading");
+
+    if (loading) {
+      loading.classList.remove("active");
+      loading.setAttribute("aria-hidden", "true");
+    }
+
+    document.body.style.overflow = "";
+
+  });
 });
