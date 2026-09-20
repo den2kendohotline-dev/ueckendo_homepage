@@ -2412,6 +2412,16 @@ html {
   text-decoration: none;
 }
 
+.logo {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s ease;
+}
+
+.logo:hover {
+  opacity: 0.5;
+}
+
 @media (max-width: 700px) {
 
   .news-page {
