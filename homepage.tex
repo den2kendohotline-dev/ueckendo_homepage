@@ -121,7 +121,6 @@
   \item 年間予定の更新
   \item Googleカレンダーによる稽古予定・大会予定の更新
   \item 大会・試合結果の掲載
-  \item SNSや連絡先などの変更
   \item GitHubへの変更内容の保存
   \item Renderへのデプロイ
 \end{itemize}
@@ -347,18 +346,6 @@ NEWSは新しいものから順番に表示します。
 を2026年のNEWSより上に追加します。
 
 
-\subsection{更新時の注意}
-
-NEWSを追加したら、必ず以下を確認してください。
-
-\begin{itemize}
-  \item 日付が正しいか
-  \item 誤字・脱字がないか
-  \item 新しいNEWSが一番上になっているか
-  \item \texttt{index.html} と \texttt{news.html} の両方を更新したか
-  \item PC表示で崩れていないか
-  \item スマートフォン表示で崩れていないか
-\end{itemize}
 
 
 % ========================================
@@ -389,7 +376,7 @@ MEMBERSセクションで管理しています。
 
 \subsection{部員カードの構造}
 
-部員1人分は、おおよそ以下の形式です。
+部員1人分は、以下の形式です。
 
 \begin{lstlisting}[language=HTML]
 <article class="member-card">
@@ -422,7 +409,7 @@ MEMBERSセクションで管理しています。
 
 新しい部員を追加するときは、
 既存のカードを1つコピーし、
-必要な情報を書き換える方法が簡単です。
+必要な情報を書き換えるてください。
 
 
 \subsection{役職がない場合}
@@ -454,23 +441,143 @@ MEMBERSセクションで管理しています。
 
 
 % ========================================
-\section{次に作成する項目}
+\section{Googleカレンダーの更新}
 % ========================================
 
-今後、本資料には以下を追加します。
+電通大剣道部のアカウントでGoogleカレンダーにログインし、
+稽古予定や大会予定などを追加してください。
 
-\begin{itemize}
-  \item Googleカレンダーの更新方法
-  \item 年間予定の更新方法
-  \item Git・GitHubによる更新方法
-  \item Renderへのデプロイ方法
-  \item 試合結果ページの運用方法
-  \item MEMBERS ONLYの運用方法
-  \item 使用しているサービス・アカウント
-  \item 年度替わりチェックリスト
-  \item トラブル時の対処方法
-  \item 引継ぎ時の注意事項
-\end{itemize}
+
+% ========================================
+\section{Git・GitHubによる更新}
+% ========================================
+
+\subsection{Git・GitHubの役割}
+
+ホームページのファイルはGitで管理し、
+GitHub上のリポジトリに保存しています。
+
+基本的な更新の流れは、
+
+\begin{enumerate}
+  \item VS Codeなどでファイルを編集する
+  \item ローカル環境で内容を確認する
+  \item Gitで変更内容を記録する
+  \item GitHubへpushする
+  \item Renderによって公開サイトへ反映される
+\end{enumerate}
+
+となっています。
+
+
+\subsection{作業フォルダを開く}
+
+Windowsの場合、PowerShellでホームページのフォルダへ移動します。
+
+\begin{lstlisting}
+cd C:\Users\ryota\projects\kendo_homepage
+\end{lstlisting}
+
+ただし、このパスは作成者のPCで使用しているものです。
+
+引継ぎ後は、それぞれのPCでGitHubからリポジトリを取得した場所に
+読み替えてください。
+
+
+\subsection{変更内容をGitに追加する}
+
+内容を変更したら、
+
+\begin{lstlisting}
+git add .
+\end{lstlisting}
+
+を実行します。
+
+このコマンドは、現在のフォルダ内で変更されたファイルを
+まとめてGitの記録対象に追加します。
+
+
+\subsection{コミットする}
+
+次に、変更内容をコミットします。
+
+\begin{lstlisting}
+git commit -m "update"
+\end{lstlisting}
+
+\texttt{"update"} の部分はコミットメッセージです。
+
+内容は自由ですが、後から確認しやすいように、
+変更内容が分かるものにしておくと便利です。
+
+
+\subsection{GitHubへpushする}
+
+コミット後、
+
+\begin{lstlisting}
+git push
+\end{lstlisting}
+
+を実行します。
+
+これでローカルPC上の変更がGitHubへ送信されます。
+
+
+\subsection{基本的な更新手順}
+
+普段は、以下の流れで問題ありません。
+
+\begin{lstlisting}
+git add .
+git commit -m "update"
+git push
+\end{lstlisting}
+
+GitHubへpushした後は、
+サイトを開いて変更内容が反映されていることを確認してください。
+
+% ========================================
+\section{Renderへのデプロイ}
+% ========================================
+
+\subsection{Renderの役割}
+
+ホームページはRenderを使用して公開しています。
+
+GitHubのリポジトリとRenderが接続されているため、
+通常はGitHubへpushすると、
+Renderが変更を検出して自動的にデプロイします。
+
+そのため、通常の更新では
+Render上で毎回ファイルをアップロードする必要はありません。
+
+
+
+
+
+\subsection{ホームページと試合結果アプリを混同しない}
+
+Render上では、ホームページとは別に
+試合結果を管理するWebアプリも運用しています。
+
+ホームページ：
+
+\begin{center}
+\url{https://ueckendo-homepage.onrender.com/}
+\end{center}
+
+試合結果ページ：
+
+\begin{center}
+\url{https://ueckendo-app.onrender.com/results}
+\end{center}
+
+この2つは別のサービスです。
+
+Renderの設定を変更するときは、
+\textbf{どちらのサービスを操作しているのか必ず確認してください。}
 
 
 \end{document}
