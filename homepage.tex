@@ -1,0 +1,476 @@
+\documentclass[a4paper,11pt]{ltjsarticle}
+
+% ========================================
+% パッケージ
+% ========================================
+\usepackage{luatexja}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+
+% ========================================
+% ページ設定
+% ========================================
+\geometry{
+  top=25mm,
+  bottom=25mm,
+  left=25mm,
+  right=25mm
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.7em}
+
+% ========================================
+% 色
+% ========================================
+\definecolor{uecblue}{RGB}{52,52,154}
+\definecolor{codebg}{RGB}{245,245,245}
+\definecolor{codecomment}{RGB}{80,120,80}
+
+% ========================================
+% ハイパーリンク
+% ========================================
+\hypersetup{
+  colorlinks=true,
+  linkcolor=uecblue,
+  urlcolor=uecblue
+}
+
+% ========================================
+% コード表示
+% ========================================
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  breaklines=true,
+  columns=fullflexible,
+  showstringspaces=false,
+  tabsize=2
+}
+
+
+
+% ========================================
+% 文書
+% ========================================
+\begin{document}
+
+% ========================================
+% 表紙
+% ========================================
+\begin{titlepage}
+
+\centering
+
+\vspace*{35mm}
+
+{\Large 電気通信大学体育会剣道部\par}
+
+\vspace{12mm}
+
+{\Huge\bfseries
+ホームページ\\
+運用・引継ぎマニュアル
+\par}
+
+\vspace{18mm}
+
+
+\vfill
+
+\begin{flushleft}
+本資料は、電気通信大学体育会剣道部ホームページを、
+今後の部員が継続して運用できるようにすることを目的とした
+引継ぎ資料です。
+
+ホームページの更新方法、部員情報の変更、
+お知らせの追加、公開方法などについて説明します。
+\end{flushleft}
+
+\vfill
+
+{\large 2026年9月 作成\par}
+
+\end{titlepage}
+
+% ========================================
+% 目次
+% ========================================
+\tableofcontents
+\clearpage
+
+
+
+
+\subsection{主な更新作業}
+
+通常の運用で行う作業は、主に以下のとおりです。
+
+\begin{itemize}
+  \item NEWS（お知らせ）の追加・更新
+  \item 部員情報の追加・変更
+  \item 学年・役職の更新
+  \item 年間予定の更新
+  \item Googleカレンダーによる稽古予定・大会予定の更新
+  \item 大会・試合結果の掲載
+  \item SNSや連絡先などの変更
+  \item GitHubへの変更内容の保存
+  \item Renderへのデプロイ
+\end{itemize}
+
+
+
+% ========================================
+\section{ホームページの構成}
+% ========================================
+
+\subsection{フォルダ構成}
+
+ホームページのファイルは、以下のような構成になっています。
+
+\begin{lstlisting}
+kendo_homepage/
+|
+|-- css/
+|   `-- style.css
+|
+|-- images/
+|   |-- main.jpg
+|   |-- members-bg.png
+|   `-- ...
+|
+|-- js/
+|   `-- main.js
+|
+|-- .gitignore
+|-- homepage.tex
+|-- index.html
+`-- news.html
+\end{lstlisting}
+
+
+\subsection{各ファイルの役割}
+
+\begin{longtable}{p{0.27\textwidth}p{0.63\textwidth}}
+\toprule
+\textbf{ファイル・フォルダ} & \textbf{役割} \\
+\midrule
+\endhead
+
+\texttt{index.html}
+&
+ホームページ本体です。
+ABOUT、NEWS、SCHEDULE、MEMBERS、RESULTS、CONTACTなど、
+トップページに表示される内容を記述しています。
+\\
+
+\texttt{news.html}
+&
+過去のお知らせを含むNEWS一覧ページです。
+新しいお知らせを追加するときに編集します。
+\\
+
+\texttt{css/style.css}
+&
+ホームページ全体のデザインを管理しています。
+文字サイズ、色、余白、スマートフォン表示、
+部員カードなどの見た目を変更するときに編集します。
+\\
+
+\texttt{js/main.js}
+&
+ホームページの動作を管理しています。
+部員カードのスライド、スマートフォン用メニュー、
+ヘッダーの動作、試合結果ページ等への遷移時の
+ローディング処理などが記述されています。
+\\
+
+\texttt{images/}
+&
+トップページやMEMBERS欄などで使用する画像を保存します。
+\\
+
+\texttt{homepage.tex}
+&
+本引継ぎマニュアルのLaTeXファイルです。
+ホームページの仕様や運用方法を変更した場合は、
+必要に応じてこの資料も更新してください。
+\\
+
+\bottomrule
+\end{longtable}
+
+
+\subsection{普段編集するファイル}
+
+通常のホームページ運用では、主に
+
+\begin{itemize}
+  \item \texttt{index.html}
+  \item \texttt{news.html}
+\end{itemize}
+
+を編集します。
+
+\texttt{style.css} と \texttt{main.js} は、
+ホームページのデザインや動作そのものを変更するときに使用します。
+
+通常のお知らせ追加や部員情報の更新では、
+基本的にこれらを変更する必要はありません。
+
+\textbf{よく分からない状態で \texttt{style.css} や
+\texttt{main.js} を大きく変更しないでください。}
+
+
+% ========================================
+\section{NEWS（お知らせ）の更新}
+% ========================================
+
+\subsection{NEWSの仕組み}
+
+NEWSは、
+
+\begin{enumerate}
+  \item トップページのNEWS欄
+  \item NEWS一覧ページ
+\end{enumerate}
+
+の2か所に表示されます。
+
+トップページ側は \texttt{index.html}、
+一覧ページ側は \texttt{news.html} で管理しています。
+
+したがって、新しいお知らせを掲載するときは、
+原則として\textbf{両方のファイルを更新します}。
+
+
+\subsection{トップページにNEWSを追加する}
+
+\texttt{index.html} を開き、
+
+\begin{lstlisting}
+<div class="news-list">
+\end{lstlisting}
+
+の中にある既存のNEWSを確認します。
+
+1件のお知らせは、以下のような形式です。
+
+\begin{lstlisting}[language=HTML]
+<article class="news-item">
+  <p class="news-date">2026.09.20</p>
+  <p class="news-title">
+    第75回関東学生剣道優勝大会が開催されましたので、
+    結果をアップしました。
+  </p>
+</article>
+\end{lstlisting}
+
+新しいお知らせを追加する場合は、
+既存の \texttt{article} をコピーして、
+日付と文章を変更してください。
+
+
+\subsection{新しいNEWSを一番上に追加する}
+
+NEWSは新しいものから順番に表示します。
+
+例えば、2026年10月1日のお知らせを追加する場合は、
+
+\begin{lstlisting}[language=HTML]
+<article class="news-item">
+  <p class="news-date">2026.10.01</p>
+  <p class="news-title">
+    10月の稽古予定を更新しました。
+  </p>
+</article>
+\end{lstlisting}
+
+をNEWS一覧の一番上に追加します。
+
+
+\subsection{NEWS一覧ページにも追加する}
+
+次に \texttt{news.html} を開きます。
+
+現在は、年ごとに
+
+\begin{lstlisting}[language=HTML]
+<div class="news-year">
+
+  <h2>2026</h2>
+
+  <div class="news-list">
+
+    ...
+
+  </div>
+
+</div>
+\end{lstlisting}
+
+という形でNEWSを管理しています。
+
+同じ年のお知らせであれば、
+その年の \texttt{news-list} の一番上に追加してください。
+
+
+\subsection{年が変わった場合}
+
+新しい年になった場合は、
+新しい \texttt{news-year} を作成します。
+
+例えば2027年の場合は、
+
+\begin{lstlisting}[language=HTML]
+<div class="news-year">
+
+  <h2>2027</h2>
+
+  <div class="news-list">
+
+    <!-- 2027年のお知らせをここに追加 -->
+
+  </div>
+
+</div>
+\end{lstlisting}
+
+を2026年のNEWSより上に追加します。
+
+
+\subsection{更新時の注意}
+
+NEWSを追加したら、必ず以下を確認してください。
+
+\begin{itemize}
+  \item 日付が正しいか
+  \item 誤字・脱字がないか
+  \item 新しいNEWSが一番上になっているか
+  \item \texttt{index.html} と \texttt{news.html} の両方を更新したか
+  \item PC表示で崩れていないか
+  \item スマートフォン表示で崩れていないか
+\end{itemize}
+
+
+% ========================================
+\section{部員情報の更新}
+% ========================================
+
+\subsection{部員情報の場所}
+
+部員情報は \texttt{index.html} の
+MEMBERSセクションで管理しています。
+
+部員は学年ごとに分けられており、
+
+\begin{lstlisting}[language=HTML]
+<div class="grade-block">
+\end{lstlisting}
+
+が1つの学年を表します。
+
+その中に、各部員の
+
+\begin{lstlisting}[language=HTML]
+<article class="member-card">
+\end{lstlisting}
+
+が並んでいます。
+
+
+\subsection{部員カードの構造}
+
+部員1人分は、おおよそ以下の形式です。
+
+\begin{lstlisting}[language=HTML]
+<article class="member-card">
+
+  <p class="member-role">主将</p>
+
+  <h4>神山 遼太郎</h4>
+
+  <dl>
+
+    <div>
+      <dt>所属学類</dt>
+      <dd>Ⅱ類</dd>
+    </div>
+
+    <div>
+      <dt>段位</dt>
+      <dd>三段</dd>
+    </div>
+
+    <div>
+      <dt>出身高校</dt>
+      <dd>宇都宮高等学校</dd>
+    </div>
+
+  </dl>
+
+</article>
+\end{lstlisting}
+
+新しい部員を追加するときは、
+既存のカードを1つコピーし、
+必要な情報を書き換える方法が簡単です。
+
+
+\subsection{役職がない場合}
+
+役職がない部員についても、
+レイアウトをそろえるため
+
+\begin{lstlisting}[language=HTML]
+<p class="member-role">　</p>
+\end{lstlisting}
+
+の行自体は残してください。
+
+
+\subsection{年度替わり}
+
+年度が変わった際には、MEMBERSについて以下を確認します。
+
+\begin{enumerate}
+  \item 各学年を1つ上げる
+  \item 新1年生の欄を作成する
+  \item 新入部員のカードを追加する
+  \item 主将、主務、会計などの役職を変更する
+  \item 段位に変更がある場合は更新する
+  \item 卒業した部員の表示を整理する
+\end{enumerate}
+
+特に役職変更を忘れないよう注意してください。
+
+
+% ========================================
+\section{次に作成する項目}
+% ========================================
+
+今後、本資料には以下を追加します。
+
+\begin{itemize}
+  \item Googleカレンダーの更新方法
+  \item 年間予定の更新方法
+  \item Git・GitHubによる更新方法
+  \item Renderへのデプロイ方法
+  \item 試合結果ページの運用方法
+  \item MEMBERS ONLYの運用方法
+  \item 使用しているサービス・アカウント
+  \item 年度替わりチェックリスト
+  \item トラブル時の対処方法
+  \item 引継ぎ時の注意事項
+\end{itemize}
+
+
+\end{document}
