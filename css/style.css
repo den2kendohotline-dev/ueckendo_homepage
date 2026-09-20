@@ -2414,7 +2414,7 @@ html {
 
 .logo {
   text-decoration: none;
-  color: inherit;
+  color: #fff;
   transition: opacity 0.3s ease;
 }
 
