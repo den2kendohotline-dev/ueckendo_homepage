@@ -1,8 +1,10 @@
+% !TeX program = lualatex
 \documentclass[a4paper,11pt]{ltjsarticle}
 
 % ========================================
 % パッケージ
 % ========================================
+
 \usepackage{luatexja}
 \usepackage{graphicx}
 \usepackage{geometry}
@@ -12,11 +14,11 @@
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{longtable}
-\usepackage{fancyhdr}
 
 % ========================================
 % ページ設定
 % ========================================
+
 \geometry{
   top=25mm,
   bottom=25mm,
@@ -30,13 +32,14 @@
 % ========================================
 % 色
 % ========================================
+
 \definecolor{uecblue}{RGB}{52,52,154}
 \definecolor{codebg}{RGB}{245,245,245}
-\definecolor{codecomment}{RGB}{80,120,80}
 
 % ========================================
 % ハイパーリンク
 % ========================================
+
 \hypersetup{
   colorlinks=true,
   linkcolor=uecblue,
@@ -46,6 +49,7 @@
 % ========================================
 % コード表示
 % ========================================
+
 \lstset{
   basicstyle=\ttfamily\small,
   backgroundcolor=\color{codebg},
@@ -56,16 +60,16 @@
   tabsize=2
 }
 
-
-
 % ========================================
 % 文書
 % ========================================
+
 \begin{document}
 
 % ========================================
 % 表紙
 % ========================================
+
 \begin{titlepage}
 
 \centering
@@ -77,23 +81,23 @@
 \vspace{12mm}
 
 {\Huge\bfseries
-ホームページ\\
+ホームページ・試合結果アプリ\\
 運用・引継ぎマニュアル
 \par}
 
 \vspace{18mm}
 
-
 \vfill
 
 \begin{flushleft}
-本資料は、電気通信大学体育会剣道部ホームページを、
-今後の部員が継続して運用できるようにすることを目的とした
-引継ぎ資料です。
 
-ホームページの更新方法、部員情報の変更、
-お知らせの追加、公開方法などについて説明します。
+本資料は、電気通信大学体育会剣道部のホームページおよび
+試合結果アプリを、今後の部員が継続して運用できるようにすることを
+目的とした引継ぎ資料です。
+
+
 \end{flushleft}
+
 
 \vfill
 
@@ -101,16 +105,24 @@
 
 \end{titlepage}
 
+
 % ========================================
 % 目次
 % ========================================
+
 \tableofcontents
+
 \clearpage
 
 
+% ========================================
+\part{ホームページ本体}
+% ========================================
 
 
-\subsection{主な更新作業}
+% ========================================
+\section{主な更新作業}
+% ========================================
 
 通常の運用で行う作業は、主に以下のとおりです。
 
@@ -120,11 +132,9 @@
   \item 学年・役職の更新
   \item 年間予定の更新
   \item Googleカレンダーによる稽古予定・大会予定の更新
-  \item 大会・試合結果の掲載
   \item GitHubへの変更内容の保存
   \item Renderへのデプロイ
 \end{itemize}
-
 
 
 % ========================================
@@ -159,6 +169,7 @@ kendo_homepage/
 \subsection{各ファイルの役割}
 
 \begin{longtable}{p{0.27\textwidth}p{0.63\textwidth}}
+
 \toprule
 \textbf{ファイル・フォルダ} & \textbf{役割} \\
 \midrule
@@ -205,6 +216,7 @@ ABOUT、NEWS、SCHEDULE、MEMBERS、RESULTS、CONTACTなど、
 \\
 
 \bottomrule
+
 \end{longtable}
 
 
@@ -220,13 +232,104 @@ ABOUT、NEWS、SCHEDULE、MEMBERS、RESULTS、CONTACTなど、
 を編集します。
 
 \texttt{style.css} と \texttt{main.js} は、
-ホームページのデザインや動作そのものを変更するときに使用します。
-
+ホームページのデザインや動作そのものを変更するときに使用します。\\
 通常のお知らせ追加や部員情報の更新では、
 基本的にこれらを変更する必要はありません。
 
-\textbf{よく分からない状態で \texttt{style.css} や
-\texttt{main.js} を大きく変更しないでください。}
+% ========================================
+\section{作業を始める準備}
+% ========================================
+
+ホームページと試合結果アプリは、
+それぞれ別のGitHubリポジトリで管理しています。
+
+\begin{itemize}
+  \item ホームページ本体：\texttt{kendo\_homepage}
+  \item 試合結果・MEMBERS ONLY：\texttt{kendo\_web\_app}
+\end{itemize}
+
+新しいPCで初めて作業する場合は、
+最初に両方のリポジトリをGitHubから取得します。\\
+この作業は、基本的にPCごとに最初の1回だけ行います。
+
+\subsection{GitHubにログインする}
+
+まず、ブラウザからGitHubを開き、 
+ホームページの管理に使用しているGitHubアカウントにログインしてください。
+メールアドレスは電通大剣道部ので、パスワードは「ueckendow」です。
+
+\subsection{Gitを確認する}
+
+PCにGitがインストールされていることを確認します。\\
+PowerShellを開き、以下を実行してください。
+
+\begin{lstlisting}
+git --version
+\end{lstlisting}
+
+バージョン情報が表示されればGitを使用できます。
+
+
+\subsection{GitHubからファイルを取得する}
+
+GitHub上の
+\texttt{kendo\_homepage} と
+\texttt{kendo\_web\_app} のリポジトリを開き、
+それぞれのリポジトリURLをコピーします。\\
+次に、PowerShellで保存したい場所へ移動します。\\
+作成時のPCでは、
+
+\begin{lstlisting}
+C:\Users\ryota\projects
+\end{lstlisting}
+
+に保存しています。
+
+\begin{lstlisting}
+cd C:\Users\ryota\projects
+\end{lstlisting}
+
+その後、それぞれのリポジトリを取得します。
+
+\begin{lstlisting}
+git clone kendo_homepageのGitHubリポジトリURL
+git clone kendo_web_appのGitHubリポジトリURL
+\end{lstlisting}
+
+これにより、作業用のフォルダとして
+
+\begin{lstlisting}
+C:\Users\ryota\projects\kendo_homepage
+C:\Users\ryota\projects\kendo_web_app
+\end{lstlisting}
+
+の2つが作成されます。\\
+引継ぎ後は、それぞれのPCで保存した場所に
+読み替えてください。
+
+
+\subsection{作業するディレクトリ}
+
+ホームページ本体を更新するときは、
+
+\begin{lstlisting}
+cd C:\Users\ryota\projects\kendo_homepage
+\end{lstlisting}
+
+を実行します。\\
+試合結果、選手情報、MEMBERS ONLY、
+試合動画などを更新するときは、
+
+\begin{lstlisting}
+cd C:\Users\ryota\projects\kendo_web_app
+\end{lstlisting}
+
+を実行します。\\
+2つは別のGitリポジトリなので、
+更新する内容に応じて作業するディレクトリを変更してください。\\
+初めてGitHubへ変更を送信するときに
+ログインや認証を求められた場合は、
+画面の案内に従って認証してください。
 
 
 % ========================================
@@ -245,10 +348,11 @@ NEWSは、
 の2か所に表示されます。
 
 トップページ側は \texttt{index.html}、
-一覧ページ側は \texttt{news.html} で管理しています。
-
-したがって、新しいお知らせを掲載するときは、
-原則として\textbf{両方のファイルを更新します}。
+一覧ページ側は \texttt{news.html} で管理しています。\\
+新しいお知らせを掲載するときは、
+両方のファイルを更新します。\\
+トップページの \texttt{index.html} には最新3件を表示し、
+\texttt{news.html} には過去のお知らせも残します。
 
 
 \subsection{トップページにNEWSを追加する}
@@ -259,8 +363,7 @@ NEWSは、
 <div class="news-list">
 \end{lstlisting}
 
-の中にある既存のNEWSを確認します。
-
+の中にある既存のNEWSを確認します。\\
 1件のお知らせは、以下のような形式です。
 
 \begin{lstlisting}[language=HTML]
@@ -275,49 +378,31 @@ NEWSは、
 
 新しいお知らせを追加する場合は、
 既存の \texttt{article} をコピーして、
-日付と文章を変更してください。
-
-
-\subsection{新しいNEWSを一番上に追加する}
-
-NEWSは新しいものから順番に表示します。
-
-例えば、2026年10月1日のお知らせを追加する場合は、
-
-\begin{lstlisting}[language=HTML]
-<article class="news-item">
-  <p class="news-date">2026.10.01</p>
-  <p class="news-title">
-    10月の稽古予定を更新しました。
-  </p>
-</article>
-\end{lstlisting}
-
-をNEWS一覧の一番上に追加します。
+日付と文章を変更してください。\\
+新しいお知らせは一番上に追加します。
+トップページは最新5件のみ表示するため、
+6件になった場合は一番古いお知らせを
+\texttt{index.html} から削除してください。\\
+削除したお知らせは
+\texttt{news.html} には残します。
 
 
 \subsection{NEWS一覧ページにも追加する}
 
-次に \texttt{news.html} を開きます。
-
+次に \texttt{news.html} を開きます。\\
 現在は、年ごとに
 
 \begin{lstlisting}[language=HTML]
 <div class="news-year">
-
   <h2>2026</h2>
 
   <div class="news-list">
-
     ...
-
   </div>
-
 </div>
 \end{lstlisting}
 
-という形でNEWSを管理しています。
-
+という形でNEWSを管理しています。\\
 同じ年のお知らせであれば、
 その年の \texttt{news-list} の一番上に追加してください。
 
@@ -325,27 +410,20 @@ NEWSは新しいものから順番に表示します。
 \subsection{年が変わった場合}
 
 新しい年になった場合は、
-新しい \texttt{news-year} を作成します。
-
+新しい \texttt{news-year} を作成します。\\
 例えば2027年の場合は、
 
 \begin{lstlisting}[language=HTML]
 <div class="news-year">
-
   <h2>2027</h2>
 
   <div class="news-list">
-
-    <!-- 2027年のお知らせをここに追加 -->
-
+    <!-- 2027年のお知らせ -->
   </div>
-
 </div>
 \end{lstlisting}
 
 を2026年のNEWSより上に追加します。
-
-
 
 
 % ========================================
@@ -355,16 +433,14 @@ NEWSは新しいものから順番に表示します。
 \subsection{部員情報の場所}
 
 部員情報は \texttt{index.html} の
-MEMBERSセクションで管理しています。
-
+MEMBERSセクションで管理しています。\\
 部員は学年ごとに分けられており、
 
 \begin{lstlisting}[language=HTML]
 <div class="grade-block">
 \end{lstlisting}
 
-が1つの学年を表します。
-
+が1つの学年を表します。\\
 その中に、各部員の
 
 \begin{lstlisting}[language=HTML]
@@ -376,20 +452,20 @@ MEMBERSセクションで管理しています。
 
 \subsection{部員カードの構造}
 
-部員1人分は、以下の形式です。
+部員1人分は、以下のような形式です。
 
 \begin{lstlisting}[language=HTML]
 <article class="member-card">
 
   <p class="member-role">主将</p>
 
-  <h4>神山 遼太郎</h4>
+  <h4>山田 太郎</h4>
 
   <dl>
 
     <div>
       <dt>所属学類</dt>
-      <dd>Ⅱ類</dd>
+      <dd>II類</dd>
     </div>
 
     <div>
@@ -399,7 +475,7 @@ MEMBERSセクションで管理しています。
 
     <div>
       <dt>出身高校</dt>
-      <dd>宇都宮高等学校</dd>
+      <dd>○○高等学校</dd>
     </div>
 
   </dl>
@@ -409,19 +485,14 @@ MEMBERSセクションで管理しています。
 
 新しい部員を追加するときは、
 既存のカードを1つコピーし、
-必要な情報を書き換えるてください。
+必要な情報を書き換えてください。
 
 
 \subsection{役職がない場合}
 
 役職がない部員についても、
-レイアウトをそろえるため
-
-\begin{lstlisting}[language=HTML]
-<p class="member-role">　</p>
-\end{lstlisting}
-
-の行自体は残してください。
+レイアウトをそろえるため、
+既存の役職がない部員のカードと同じ形式にしてください。
 
 
 \subsection{年度替わり}
@@ -437,65 +508,53 @@ MEMBERSセクションで管理しています。
   \item 卒業した部員の表示を整理する
 \end{enumerate}
 
-特に役職変更を忘れないよう注意してください。
-
 
 % ========================================
 \section{Googleカレンダーの更新}
 % ========================================
 
-電通大剣道部のアカウントでGoogleカレンダーにログインし、
-稽古予定や大会予定などを追加してください。
+電通大剣道部のGoogleアカウントで
+Googleカレンダーにログインし、
+稽古予定や大会予定などを追加してください。\\
+Googleカレンダーに登録した内容は、
+ホームページのSCHEDULE欄にも反映されます。\\
+通常の予定追加・変更では、
+\texttt{index.html} を編集する必要はありません。
 
 
 % ========================================
 \section{Git・GitHubによる更新}
 % ========================================
 
-\subsection{Git・GitHubの役割}
-
-ホームページのファイルはGitで管理し、
-GitHub上のリポジトリに保存しています。
-
-基本的な更新の流れは、
-
-\begin{enumerate}
-  \item VS Codeなどでファイルを編集する
-  \item ローカル環境で内容を確認する
-  \item Gitで変更内容を記録する
-  \item GitHubへpushする
-  \item Renderによって公開サイトへ反映される
-\end{enumerate}
-
-となっています。
+ホームページのファイルを編集した後は、
+Gitを使用して変更内容をGitHubへ反映します。\\
+GitHubへpushすると、
+Renderが変更を検出し、公開サイトへ自動的に反映されます。
 
 
-\subsection{作業フォルダを開く}
+\subsection{作業ディレクトリへ移動する}
 
-Windowsの場合、PowerShellでホームページのフォルダへ移動します。
+PowerShellを開き、ホームページの作業ディレクトリへ移動します。\\
+作成時のPCでは、
 
 \begin{lstlisting}
 cd C:\Users\ryota\projects\kendo_homepage
 \end{lstlisting}
 
-ただし、このパスは作成者のPCで使用しているものです。
-
-引継ぎ後は、それぞれのPCでGitHubからリポジトリを取得した場所に
-読み替えてください。
+を実行します。\\
+引継ぎ後は、それぞれのPCで
+\texttt{kendo\_homepage} を保存した場所に読み替えてください。
 
 
 \subsection{変更内容をGitに追加する}
 
-内容を変更したら、
+ファイルを変更したら、
 
 \begin{lstlisting}
 git add .
 \end{lstlisting}
 
 を実行します。
-
-このコマンドは、現在のフォルダ内で変更されたファイルを
-まとめてGitの記録対象に追加します。
 
 
 \subsection{コミットする}
@@ -506,10 +565,9 @@ git add .
 git commit -m "update"
 \end{lstlisting}
 
-\texttt{"update"} の部分はコミットメッセージです。
-
-内容は自由ですが、後から確認しやすいように、
-変更内容が分かるものにしておくと便利です。
+\texttt{"update"} の部分はコミットメッセージです。\\
+内容は自由ですが、
+変更内容が分かるものにしておくと後から確認しやすくなります。
 
 
 \subsection{GitHubへpushする}
@@ -520,14 +578,12 @@ git commit -m "update"
 git push
 \end{lstlisting}
 
-を実行します。
-
-これでローカルPC上の変更がGitHubへ送信されます。
-
+を実行します。\\
+これでPC上の変更がGitHubへ送信されます。
 
 \subsection{基本的な更新手順}
 
-普段は、以下の流れで問題ありません。
+普段は、以下の流れで更新します。
 
 \begin{lstlisting}
 git add .
@@ -536,7 +592,8 @@ git push
 \end{lstlisting}
 
 GitHubへpushした後は、
-サイトを開いて変更内容が反映されていることを確認してください。
+公開サイトを開いて変更内容が反映されていることを確認してください。
+
 
 % ========================================
 \section{Renderへのデプロイ}
@@ -544,40 +601,158 @@ GitHubへpushした後は、
 
 \subsection{Renderの役割}
 
-ホームページはRenderを使用して公開しています。
-
+ホームページはRenderを使用して公開しています。\\
 GitHubのリポジトリとRenderが接続されているため、
 通常はGitHubへpushすると、
-Renderが変更を検出して自動的にデプロイします。
-
+Renderが変更を検出して自動的にデプロイします。\\
 そのため、通常の更新では
 Render上で毎回ファイルをアップロードする必要はありません。
 
 
+\subsection{公開後の確認}
 
-
-
-\subsection{ホームページと試合結果アプリを混同しない}
-
-Render上では、ホームページとは別に
-試合結果を管理するWebアプリも運用しています。
-
-ホームページ：
+デプロイが完了したら、
 
 \begin{center}
 \url{https://ueckendo-homepage.onrender.com/}
 \end{center}
 
-試合結果ページ：
+を開き、変更内容が正しく反映されていることを確認してください。
 
-\begin{center}
-\url{https://ueckendo-app.onrender.com/results}
-\end{center}
 
-この2つは別のサービスです。
+% ========================================
+\part{試合結果管理アプリ}
+% ========================================
 
-Renderの設定を変更するときは、
-\textbf{どちらのサービスを操作しているのか必ず確認してください。}
+試合結果、選手情報、MEMBERS ONLY、試合動画などは、
+\texttt{kendo\_web\_app} で管理しています。\\
+これらを更新する場合は、
+「作業を始める準備」で説明した
+\texttt{kendo\_web\_app} のディレクトリで作業してください。
+
+
+% ========================================
+\section{選手情報の管理}
+% ========================================
+
+選手の追加・変更が必要になった場合は、
+試合結果アプリの選手管理機能から更新します。
+部員情報の「備考」には、主将のみ「主将」と入力してください。 
+主将以外の部員については、基本的に備考は空欄のままにしてください。
+
+% ========================================
+\section{MEMBERS ONLY}
+% ========================================
+
+MEMBERS ONLYは、
+部員・関係者向けの試合動画を掲載するページです。\\
+パスワードは「uec102」です。\\
+ホームページ本体のMEMBERS ONLYリンクから
+\texttt{kendo\_web\_app} 側のログインページへ移動します。
+MEMBERS ONLYに関するページや処理を変更する場合は、
+\texttt{kendo\_homepage} ではなく
+\texttt{kendo\_web\_app} 側を編集してください。
+
+
+% ========================================
+\section{YouTube動画の更新}
+% ========================================
+
+試合動画はYouTubeにアップロードし、
+MEMBERS ONLYページから閲覧できるようにしています。
+YouTubeへの動画のアップロード方法については、
+別途作成されているYouTube用マニュアルを参照してください。
+YouTubeへのアップロードが完了したら、
+\texttt{kendo\_web\_app} の
+
+\begin{lstlisting}
+templates/members_videos.html
+\end{lstlisting}
+を編集します。
+
+
+\subsection{大会動画を追加する}
+
+\texttt{members\_videos.html} を開き、
+既存の大会動画の部分をコピーして使用します。
+
+\begin{lstlisting}[language=HTML]
+<div class="video">
+  <div class="date">2026.09.13</div>
+
+  <div class="name">
+    第75回関東学生剣道優勝大会
+  </div>
+
+  <a
+    class="watch"
+    href="YouTubeのURL"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    WATCH VIDEO ->
+  </a>
+</div>
+\end{lstlisting}
+
+コピーした後、以下の3か所を変更します。
+
+\begin{itemize}
+  \item \texttt{date}：大会の日付
+  \item \texttt{name}：大会名
+  \item \texttt{href}：YouTubeの動画またはプレイリストのURL
+\end{itemize}
+
+新しい大会は、
+同じ年度の中で新しいものが上になるように追加してください。
+
+
+\subsection{年度が変わった場合}
+
+年度が変わった場合は、
+新しい年度の見出しと動画一覧を作成します。\\
+例えば2027年度の場合は、
+
+\begin{lstlisting}[language=HTML]
+<h2 class="year">2027年度</h2>
+
+<div class="video-list">
+
+  <div class="video">
+    ...
+  </div>
+
+</div>
+\end{lstlisting}
+
+のように追加します。\\
+新しい年度は古い年度より上に追加してください。
+
+
+
+% ========================================
+\section{Git・GitHubによる更新}
+% ========================================
+
+\texttt{kendo\_web\_app} のファイルを変更した後も、
+ホームページ本体と同様にGitを使用してGitHubへ反映します。\\
+PowerShellで
+\texttt{kendo\_web\_app} のディレクトリへ移動してから、
+
+\begin{lstlisting}
+git add .
+git commit -m "update"
+git push
+\end{lstlisting}
+
+を実行します。\\
+\texttt{kendo\_homepage} と
+\texttt{kendo\_web\_app} は別のGitリポジトリなので、
+別々にpushします。
+GitHubへpushすると、
+Renderが変更を検出して自動的にデプロイします。\\
+デプロイ後は実際のページを開き、
+変更内容が正しく反映されていることを確認してください。
 
 
 \end{document}
