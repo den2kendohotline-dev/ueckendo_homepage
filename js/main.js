@@ -209,3 +209,45 @@ window.addEventListener("pageshow", () => {
   document.body.style.overflow = "";
 
 });
+
+// NEWSをnews.htmlから取得して最新5件を表示
+document.addEventListener("DOMContentLoaded", async () => {
+  const homeNewsList = document.getElementById("home-news-list");
+
+  // トップページ以外では実行しない
+  if (!homeNewsList) return;
+
+  try {
+    const response = await fetch("news.html");
+
+    if (!response.ok) {
+      throw new Error("NEWSの取得に失敗しました");
+    }
+
+    const html = await response.text();
+    const doc = new DOMParser().parseFromString(html, "text/html");
+
+    const newsItems = Array.from(
+      doc.querySelectorAll(".news-page .news-item")
+    );
+
+    // 日付の新しい順に並べ替える
+    newsItems.sort((a, b) => {
+      const getDate = (item) => {
+        const date = item.querySelector(".news-date").textContent.trim();
+        return new Date(date.replace(/\./g, "/")).getTime();
+      };
+
+      return getDate(b) - getDate(a);
+    });
+
+    // 最新5件を表示
+    newsItems.slice(0, 5).forEach(item => {
+      homeNewsList.appendChild(item.cloneNode(true));
+    });
+
+  } catch (error) {
+    console.error("NEWS読み込みエラー:", error);
+    homeNewsList.textContent = "お知らせを読み込めませんでした。";
+  }
+});

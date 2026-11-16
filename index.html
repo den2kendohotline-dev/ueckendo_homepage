@@ -241,7 +241,12 @@
   </div>
 </div>
 
-  <div class="news-list">
+  <div class="news-list" id="home-news-list"></div>
+
+    <article class="news-item">
+      <p class="news-date">2026.11.14</p>
+      <p class="news-title">第66回調布市民スポーツ大会剣道競技が開催されましたので、結果をアップしました。</p>
+    </article>
 
     <article class="news-item">
       <p class="news-date">2026.09.20</p>
@@ -991,6 +996,35 @@
 
 </footer>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const newsList = document.querySelector(".news-list");
+
+  if (!newsList) return;
+
+  const newsItems = Array.from(
+    newsList.querySelectorAll(".news-item")
+  );
+
+  // 日付が新しい順に並べ替え
+  newsItems.sort((a, b) => {
+    const dateA = new Date(
+      a.querySelector(".news-date").textContent.trim().replace(/\./g, "/")
+    );
+    const dateB = new Date(
+      b.querySelector(".news-date").textContent.trim().replace(/\./g, "/")
+    );
+
+    return dateB - dateA;
+  });
+
+  // 最新3件だけ表示
+  newsItems.forEach((item, index) => {
+    newsList.appendChild(item);
+    item.style.display = index < 5 ? "" : "none";
+  });
+});
+</script>
 <script src="js/main.js"></script>
 </body>
 </html>
